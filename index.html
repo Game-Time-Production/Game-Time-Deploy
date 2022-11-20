@@ -3,13 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>Unity WebGL Player | Photon Bolt Test</title>
+    <title>Unity WebGL Player | Game Time</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
   <body>
     <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas" width=960 height=600></canvas>
+      <canvas id="unity-canvas" width=800 height=600></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -22,19 +22,19 @@
       <div id="unity-footer">
         <div id="unity-webgl-logo"></div>
         <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">Photon Bolt Test</div>
+        <div id="unity-build-title">Game Time</div>
       </div>
     </div>
     <script>
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/WebGLPB.loader.js";
+      var loaderUrl = buildUrl + "/WebGLGTB.loader.js";
       var config = {
-        dataUrl: buildUrl + "/WebGLPB.data",
-        frameworkUrl: buildUrl + "/WebGLPB.framework.js",
-        codeUrl: buildUrl + "/WebGLPB.wasm",
+        dataUrl: buildUrl + "/WebGLGTB.data",
+        frameworkUrl: buildUrl + "/WebGLGTB.framework.js",
+        codeUrl: buildUrl + "/WebGLGTB.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
-        productName: "Photon Bolt Test",
+        productName: "Game Time",
         productVersion: "1.0",
       };
 
@@ -62,7 +62,7 @@
           mobileWarning.style.display = "none";
         }, 5000);
       } else {
-        canvas.style.width = "960px";
+        canvas.style.width = "800px";
         canvas.style.height = "600px";
       }
       loadingBar.style.display = "block";
