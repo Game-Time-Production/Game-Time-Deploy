@@ -18,6 +18,10 @@
     height: 100vh;
   }
 
+  .game {
+    display: none;
+  }
+
   .herosc .herosc__group {
     position: absolute;
     bottom: 7%;
