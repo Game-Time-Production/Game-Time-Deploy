@@ -1,0 +1,68 @@
+@media screen and (max-width: 767px) {
+  .container {
+    padding: 0 20px;
+  }
+  .header {
+    background: var(--black);
+  }
+
+  .header .header__left .logo img {
+    filter: brightness(0) invert(1);
+  }
+
+  .header .header__right {
+    display: none;
+  }
+
+  .herosc {
+    height: 100vh;
+  }
+
+  .herosc .herosc__group {
+    position: absolute;
+    bottom: 7%;
+    max-width: 90vw;
+  }
+
+  .herosc .herosc__group .herosc__group-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .herosc .btn {
+    width: 240px;
+  }
+
+  .storiessc .container {
+    padding: 0 40px;
+  }
+
+  .storiessc .container {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 24px;
+  }
+
+  .aboutsc .aboutsc__content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-bottom: 36px;
+  }
+
+  .aboutsc .aboutsc__list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .footer .container .footer__mid,
+  .footer .container .footer__left {
+    display: none;
+  }
+  .footer .container {
+    justify-content: center;
+  }
+}
