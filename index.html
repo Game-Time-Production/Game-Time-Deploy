@@ -1,338 +1,119 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./css/reset.css" />
-  <link rel="stylesheet" href="./css/fonts.css" />
-  <link rel="stylesheet" href="./css/main.css" />
-  <link rel="stylesheet" href="./css/styles.css" />
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <link rel="stylesheet" href="./css/responsive.css">
-  <title>Old Dino Game</title>
-  <script src="./js/main.js"></script>
-</head>
-
-<body>
-  <header class="header">
-    <div class="container">
-      <div class="header__left">
-        <div class="logo">
-          <a href="./">
-            <img src="./assets/images/logo.png" alt="logogametime" />
-          </a>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Game Time</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico">
+    <link rel="stylesheet" href="TemplateData/style.css">
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas" width=960 height=540></canvas>
+      <div id="unity-loading-bar">
+        <div id="unity-logo"></div>
+        <div id="unity-progress-bar-empty">
+          <div id="unity-progress-bar-full"></div>
         </div>
       </div>
-      <div class="header__right">
-        <ul class="header__right-menu">
-          <li class="item">
-            <a href="#herosc" class="item__link">HOME</a>
-          </li>
-          <li class="item">
-            <a href="#storiessc" class="item__link">STORIES</a>
-          </li>
-          <li class="item">
-            <a href="#aboutsc" class="item__link">ABOUT US</a>
-          </li>
-          <li class="item">
-            <a href="#faqsc" class="item__link">FAQ</a>
-          </li>
-        </ul>
-        <button class="header__right-play btn btnmain">
-          <p>PLAY NOW</p>
-        </button>
-
+      <div id="unity-warning"> </div>
+      <div id="unity-footer">
+        <div id="unity-webgl-logo"></div>
+        <div id="unity-fullscreen-button"></div>
+        <div id="unity-build-title">Game Time</div>
       </div>
     </div>
-    <div class="progress-bar"></div>
-  </header>
+    <script>
+      var container = document.querySelector("#unity-container");
+      var canvas = document.querySelector("#unity-canvas");
+      var loadingBar = document.querySelector("#unity-loading-bar");
+      var progressBarFull = document.querySelector("#unity-progress-bar-full");
+      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+      var warningBanner = document.querySelector("#unity-warning");
 
-  <section class="herosc">
-    <div class="container">
-      <div class="herosc__group">
-        <div class="herosc__group-head">
-          <h1 class="name --h1">Eviroment Time !</h1>
-          <p class="para --para">
-            Nếu không phải bây giờ thì bao giờ ?!?
-          </p>
-          <button class="play__btn btn btnmain">
-            <div class="play__btn-content">
-              <!-- <i><img src="./assets/images/playbtn.png" alt=""></i> -->
-              <p>PLAY NOW</p>
-            </div>
-          </button>
-          <button class="watch__btn btn btnprimary">
-            <p>WATCH GAMEPLAY</p>
-          </button>
-        </div>
-        <!-- <div class="herosc__group-gif">
-        <img src=".//assets/images/316625470_1497016684105616_133666558874464986_n.gif" alt="">
-      </div> -->
-      </div>
-    </div>
-  </section>
-  <section class="storiessc">
-    <div class="container">
-      <div class="storiessc__left">
-        <div class="storiessc__left-heading">
-          <h3 class="subtitle --h3">
-            Our Stories
-          </h3>
-          <h2 class="title --h2">
-            Environment Time!
-          </h2>
-        </div>
-        <div class="inside">
-          <img src="./assets/images/insideimg3.gif" alt="">
-        </div>
-        <div class="storiessc__left-para --para">
-          Trong bối cảnh vấn đề bảo vệ môi trường trở nên cấp thiết trên toàn cầu, chúng ta nên và cần làm gì?
+      // Shows a temporary message banner/ribbon for a few seconds, or
+      // a permanent error message on top of the canvas if type=='error'.
+      // If type=='warning', a yellow highlight color is used.
+      // Modify or remove this function to customize the visually presented
+      // way that non-critical warnings and error messages are presented to the
+      // user.
+      function unityShowBanner(msg, type) {
+        function updateBannerVisibility() {
+          warningBanner.style.display = warningBanner.children.length ? 'block' : 'none';
+        }
+        var div = document.createElement('div');
+        div.innerHTML = msg;
+        warningBanner.appendChild(div);
+        if (type == 'error') div.style = 'background: red; padding: 10px;';
+        else {
+          if (type == 'warning') div.style = 'background: yellow; padding: 10px;';
+          setTimeout(function() {
+            warningBanner.removeChild(div);
+            updateBannerVisibility();
+          }, 5000);
+        }
+        updateBannerVisibility();
+      }
 
-          Environment Time! là một nhóm các bạn trẻ tâm huyết với vấn đề bảo môi trường mang khát khao về một
-          tương lai xanh-sạch-đẹp. Tuy nhiên, để giải quyết vấn đề phức tạp cần nhiều hơn là nỗ lực. Vì vậy,
-          Environment Time! cần tìm hướng đi đúng đắn và hiệu quả. Hai đội trưởng đã có một cuộc tranh cãi về định
-          hướng tiếp theo của của team.
-          Một người cho rằng, ý thức là quan trọng nhất, vậy nên team nên tiếp tục tuyên truyền và xây dựng những
-          thói quen tốt cho mọi người. Người còn lại thì cho rằng, chúng ta chưa có đủ các phương thức hỗ trợ người dân,
-          cần lập các địa điểm thu gom rác và tái chế rác.
-        </div>
-        <div class="storiessc__left-para --para">
-          Kết quả: Các bạn là nhân tố quan trọng để quyết định!
-        </div>
-        <!-- <div class="inside">
-          <img src="./assets/images/insideimg2.gif" alt="">
-        </div>
-        <div class="--h3">
-          CASE #3: CORRUPTION AT COWBOY COUNTY
-        </div>
-        <div class="storiessc__left-para --para">
-          In the exciting series finale, The Detective and Lobster Cop are tasked to solve the conundrum of a
-          sheriff-less county. But not all is as it seems here, when a surprisingly simple solution to the case reveals
-          a sinister scheme. Maybe crime is real after all...
+      var buildUrl = "Build";
+      var loaderUrl = buildUrl + "/Web build.loader.js";
+      var config = {
+        dataUrl: buildUrl + "/Web build.data",
+        frameworkUrl: buildUrl + "/Web build.framework.js",
+        codeUrl: buildUrl + "/Web build.wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Game Time",
+        productVersion: "1.0",
+        showBanner: unityShowBanner,
+      };
 
-          Corruption at Cowboy County is the third and final game in the Frog Detective series.
+      // By default Unity keeps WebGL canvas render target size matched with
+      // the DOM size of the canvas element (scaled by window.devicePixelRatio)
+      // Set this to false if you want to decouple this synchronization from
+      // happening inside the engine, and you would instead like to size up
+      // the canvas DOM size and WebGL render target sizes yourself.
+      // config.matchWebGLToCanvasSize = false;
 
-          Frog Detective 3: Corruption at Cowboy County is a family-friendly yet witty take on the detective game genre.
-          Solve the mysteries on your own, or play along with friends as you take turns reading out the dialogue. Think
-          you can crack the case?
-        </div>
-        <div class="inside">
-          <img src="./assets/images/insideimg4.gif" alt="">
-        </div>
-        <div class="--h3">
-          CASE #3: CORRUPTION AT COWBOY COUNTY
-        </div>
-        <div class="storiessc__left-para --para">
-          In the exciting series finale, The Detective and Lobster Cop are tasked to solve the conundrum of a
-          sheriff-less county. But not all is as it seems here, when a surprisingly simple solution to the case reveals
-          a sinister scheme. Maybe crime is real after all...
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        // Mobile device style: fill the whole browser client area with the game canvas:
 
-          Corruption at Cowboy County is the third and final game in the Frog Detective series.
+        var meta = document.createElement('meta');
+        meta.name = 'viewport';
+        meta.content = 'width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes';
+        document.getElementsByTagName('head')[0].appendChild(meta);
+        container.className = "unity-mobile";
+        canvas.className = "unity-mobile";
 
-          Frog Detective 3: Corruption at Cowboy County is a family-friendly yet witty take on the detective game genre.
-          Solve the mysteries on your own, or play along with friends as you take turns reading out the dialogue. Think
-          you can crack the case?
-        </div>
-        <div class="inside">
-          <img src="./assets/images/insideimg1.gif" alt="">
-        </div>
-        <div class="--h3">
-          CASE #3: CORRUPTION AT COWBOY COUNTY
-        </div>
-        <div class="storiessc__left-para --para">
-          In the exciting series finale, The Detective and Lobster Cop are tasked to solve the conundrum of a
-          sheriff-less county. But not all is as it seems here, when a surprisingly simple solution to the case reveals
-          a sinister scheme. Maybe crime is real after all...
+        // To lower canvas resolution on mobile devices to gain some
+        // performance, uncomment the following line:
+        // config.devicePixelRatio = 1;
 
-          Corruption at Cowboy County is the third and final game in the Frog Detective series.
+        unityShowBanner('WebGL builds are not supported on mobile devices.');
+      } else {
+        // Desktop style: Render the game canvas in a window that can be maximized to fullscreen:
 
-          Frog Detective 3: Corruption at Cowboy County is a family-friendly yet witty take on the detective game genre.
-          Solve the mysteries on your own, or play along with friends as you take turns reading out the dialogue. Think
-          you can crack the case?
-        </div> -->
-      </div>
-      <div class="storiessc__right">
-        <div class="storiessc__right-gp">
-          <h3 class="--h3 title">Gameplay</h3>
-          <img class="imgvideo" src="./assets/images/storiesbg.jpg">
-          <i class="playicon">
-            <img src="./assets/images/playbtn.png" alt="">
-          </i>
-        </div>
-        <img class="sideimg" src="./assets/images/side1.png" alt="">
-        <img class="sideimg" src="./assets/images/side2.png" alt="">
-        <img class="sideimg" src="./assets/images/side3.png" alt="">
-      </div>
-    </div>
-    </div>
-  </section>
-  <section class="gamesc">
-    <iframe src="https://game-time-production.github.io/Game-Time-Deploy/"></iframe>
-  </section>
-  <section class="aboutsc">
-    <div class="container">
-      <div class="aboutsc__content">
-        <div class="aboutsc__content-group" data-aos="fade-up">
-          <div class="title --h2">
-            ABOUT US
-          </div>
-          <!-- <div class="--para">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae vero odit architecto, numquam
-            molestiae
-            praesentium debitis error porro ipsa dicta soluta non quam earum labore cum, culpa quasi, in repellendus.
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita eos optio repellat exercitationem, nulla
-            eveniet assumenda mollitia at architecto ratione tempora esse corporis, eaque animi ipsam veritatis
-            blanditiis
-            iusto iste.
-          </div> -->
-          <div class="--h3">
-            Paragraph
-          </div>
-          <div class="--para">
-            Come and play 'cause it's Game Time!
-            Trải nghiệm của người dùng và truyền tải thông điệp là ưu tiên hàng đầu của Game Time!
-          </div>
-        </div>
-        <div class="aboutsc__content-image">
-          <img data-aos="fade" src="./assets/images/krakenimages-Y5bvRlcCx8k-unsplash.jpg" alt="">
-        </div>
-      </div>
-      <h2 class="member --h2">Members</h2>
-      <div class="aboutsc__list">
-        <div class="aboutsc__list-member" data-aos="fade-up">
-          <div class="card">
-            <div class="card__img">
-              <img src="./assets/images/ngoc.png" alt="">
-            </div>
-          </div>
-          <div class="name">Võ Thái Ngọc</div>
-        </div>
-        <div class="aboutsc__list-member" data-aos="fade-up">
-          <div class="card">
-            <div class="card__img">
-              <img src="./assets/images/IMG_0212_-_Giàu_Huỳnh-removebg-preview.png" alt="">
-            </div>
-          </div>
-          <div class="name">Huỳnh Thị Ngọc Giàu</div>
-        </div>
-        <div class="aboutsc__list-member" data-aos="fade-up">
-          <div class="card">
-            <div class="card__img">
-              <img src="./assets/images/thiennguyen.png" alt="">
-            </div>
-          </div>
-          <div class="name">Nguyễn Minh Thiện</div>
-        </div>
-        <div class="aboutsc__list-member" data-aos="fade-up">
-          <div class="card">
-            <div class="card__img">
-              <img src="./assets/images/bkhanh.png" alt="">
-            </div>
-          </div>
-          <div class="name">Bùi Đoàn Bửu Khánh</div>
-        </div>
-        <div class="aboutsc__list-member" data-aos="fade-up">
-          <div class="card">
-            <div class="card__img">
-              <img src="./assets/images/qkhanh.png" alt="">
-            </div>
-          </div>
-          <div class="name">Nguyễn Quốc Khánh</div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="faqsc">
-    <div class="container" data-aos="fade-right">
-      <h2 class="--h2">Accordion</h2>
+        canvas.style.width = "960px";
+        canvas.style.height = "540px";
+      }
 
-      <button class="accordion">Section 1</button>
-      <div class="panel">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat.</p>
-      </div>
+      loadingBar.style.display = "block";
 
-      <button class="accordion">Section 2</button>
-      <div class="panel">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat.</p>
-      </div>
-
-      <button class="accordion">Section 3</button>
-      <div class="panel">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat.</p>
-      </div>
-      <button class="accordion">Section 4</button>
-      <div class="panel">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-          dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-          commodo consequat.</p>
-      </div>
-    </div>
-  </section>
-  <footer class="footer">
-    <div class="container">
-      <div class="footer__left">
-        <div class="logo">
-          <a href="./">
-            <img src="./assets/images/logo.png" alt="logogametime" />
-          </a>
-        </div>
-      </div>
-      <div class="footer__mid">
-        <ul class="footer__mid-menu">
-          <li class="item"><a href="#">Privacy Policy</a></li>
-          <li class="item"><a href="#">About Us</a></li>
-          <li class="item"><a href="#">Terms of Service</a></li>
-        </ul>
-        <ul class="footer__mid-menu">
-          <li class="item"><a href="#">Tutorial</a></li>
-          <li class="item"><a href="#">Stories</a></li>
-          <li class="item"><a href="#">Play game</a></li>
-        </ul>
-        <ul class="footer__mid-menu">
-          <li class="item"><a href="#">FAQ</a></li>
-          <li class="item"><a href="#">News</a></li>
-          <li class="item"><a href="#">Marketplace</a></li>
-        </ul>
-      </div>
-      <div class="footer__right">
-        <a href="#" target="_blank">
-          <i><img srcset="./assets/images/fb.png 2x" alt="" class="icon" /></i>
-          <a href="#" target="_blank">
-            <i><img srcset="./assets/images/ytb.png 2x" alt="" class="icon" /></i>
-            <a href="#" target="_blank">
-              <i><img srcset="./assets/images/ig.png 2x" alt="" class="icon" /></i>
-              <a href="#" target="_blank">
-                <i><img srcset="./assets/images/likedin.png 2x" alt="" class="icon" /></i>
-                <a href="#" target="_blank">
-                  <i><img srcset="./assets/images/twitter.png 2x" alt="" class="icon" /></i>
-                </a>
-      </div>
-  </footer>
-  <!-- <div class="popupvideo">
-    <div class="popupvideo__inner">
-      <div class="popupvideo__inner-iframe">
-        <iframe src="" title="YouTube video player" frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen></iframe>
-        <div class="btnclose">
-          <i><img src="./assets/images/close.svg"></i>
-        </div>
-      </div>
-    </div>
-  </div> -->
-  <script src="./js/main.js"></script>
-  <script>
-    AOS.init();
-  </script>
-</body>
-
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          loadingBar.style.display = "none";
+          fullscreenButton.onclick = () => {
+            unityInstance.SetFullscreen(1);
+          };
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
 </html>
